@@ -1,0 +1,72 @@
+@(client_app:OAuthApp
+, user_id:String
+, redirect_uri:String
+, scope:Option[String]
+)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Access Manager</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            body {
+              background-color: #ccc;
+            }
+
+            .container {
+              max-width: 600px;
+              background-color: #eee;
+              border-radius: 8px;
+              margin-top: 40px;
+              padding: 20px;
+            }
+
+            .btn.btn-particeep {
+              background-color: #f05e50;
+              color: #ecf0f1;
+            }
+
+            .btn.btn-particeep:hover, .btn.particeep:focus {
+                background-color: #f4897f;
+                color: #ecf0f1;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="container">
+            <h1>Grant access to your account</h1>
+            <p>
+                @{client_app.name} request access to your account
+            </p>
+            <div class="row margin-top40">
+                <!-- LOGIN -->
+                <div class="col-md-6 col-md-offset-3">
+                    @helper.form(action = controllers.routes.OAuth2Controller.authorize(), 'id -> "oauth2Form", 'class -> "white-row") {
+                        <input type="hidden" name="client_id" value="@client_app.client_id">
+                        <input type="hidden" name="redirect_uri" value="@redirect_uri">
+                        <input type="hidden" name="user_id" value="@user_id">
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="scope"> Read
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="scope"> Write
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-offset-6 col-xs-6">
+                                <input id="loginBtn" type="submit" value="Grant" class="btn btn-particeep pull-right" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- /LOGIN -->
+            </div>
+        </section>
+    </body>
+</html>
